@@ -148,7 +148,6 @@ echo " "
 echo "Would you like to run XMRig under admin previlages? Running it under admin may increase mining speed. y = 1/n = 2:"
 read adminprev
 
-
 elif ((wherexmriginstalled==2)); then
 echo " "
 echo "Enter the directory XMRig is installed in:"
@@ -318,14 +317,13 @@ exit
 fi
 
 
-
-if ((adminprev==1)); then
-echo " "
-echo "Starting XMRig under admin..."
-sleep 5
+if ((adminprev==1)); then 
+sleep 2
 cd xmrig
 cd build
-sudo ./xmrig -o gulf.moneroocean.stream:$portenter -u $walKy -p $minername
+echo " "
+echo "Would you like to enable 1GB pages? y = 1/n = 2:"
+read gbpagesopt
 
 elif ((adminprev==2)); then
 echo " "
@@ -337,8 +335,21 @@ cd build
 
 fi
 
+if ((gbpagesopt==1)); then
+echo " "
+echo "Starting XMRig with admin previlages and enabling 1GB pages..."
+sleep 3
+sudo ./xmrig -o gulf.moneroocean.stream:$portenter -u $walKy -p $minername --randomx-1gb-pages
+
+elif ((gbpagesopt==2)); then
+echo " "
+echo "Starting XMRig with admin previlages..."
+sleep 3
+sudo ./xmrig -o gulf.moneroocean.stream:$portenter -u $walKy -p $minername
+
+fi
+
 }
 
-
-# Call Functions List
+# Call functions
 mainmenu
